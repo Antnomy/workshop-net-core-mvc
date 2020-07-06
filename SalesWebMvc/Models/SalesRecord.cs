@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SalesWebMvc.Models.Enums;
 
 namespace SalesWebMvc.Models
