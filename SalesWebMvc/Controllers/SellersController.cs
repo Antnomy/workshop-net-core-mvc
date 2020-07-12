@@ -63,8 +63,12 @@ namespace SalesWebMvc.Controllers
         }
         public IActionResult Details(int? id)
         {
-            // var viewModel = new SellerFormViewModel() { Seller = _sellerService.FindById(id) };
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var seller = _sellerService.FindById(id);
+            return View(seller);
         }
     }
 }
