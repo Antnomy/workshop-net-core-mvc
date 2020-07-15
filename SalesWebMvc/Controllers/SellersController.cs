@@ -39,8 +39,7 @@ namespace SalesWebMvc.Controllers
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
-
-        [HttpGet]
+       
         public IActionResult Delete(int? id)
         {
             if(id == null)
