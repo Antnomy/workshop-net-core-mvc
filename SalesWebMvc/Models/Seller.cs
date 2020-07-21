@@ -59,5 +59,9 @@ namespace SalesWebMvc.Models
         {
             return Sales.Where(sr => sr.Data >= initial && sr.Data <= final).Select(sr => sr.Amount).DefaultIfEmpty(0.0).Sum();
         }
+        public double QntSales()
+        {
+            return Sales.Count;
+        }
     }
 }

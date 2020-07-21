@@ -28,5 +28,9 @@ namespace SalesWebMvc.Models
         {
             return Sellers.Sum(s => s.TotalSales(initial, final));
         }
+        public double QntSales()
+        {
+            return Sellers.Sum(s => s.QntSales());
+        }
     }
 }

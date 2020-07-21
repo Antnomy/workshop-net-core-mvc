@@ -4,37 +4,58 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Services;
+using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
+
 
 namespace SalesWebMvc.Controllers
 {
     public class SalesRecordsController : Controller
     {
+        private readonly SellerService _sellerService;
+        private readonly DepartmentService _departmentService;
         private readonly SalesRecordService _salesRecordService;
-        public SalesRecordsController(SalesRecordService salesRecordService)
+
+        public SalesRecordsController(SellerService sellerService, DepartmentService departmentService, SalesRecordService salesRecordService)
         {
+            _sellerService = sellerService;
+            _departmentService = departmentService;
             _salesRecordService = salesRecordService;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             DateTime today = DateTime.Today;
             DateTime yestarday = new DateTime(today.Year, today.Month, today.Day - 1);
             ViewData["DefaultDataMax"] = today.ToString("yyyy-MM-dd");
             ViewData["DefaultDataMin"] = yestarday.ToString("yyyy-MM-dd");
-            return View();
+
+            SelectorViewModel viewModel = new SelectorViewModel() { Departments = await _departmentService.FindAllAsync(), Sellers = await _sellerService.FindAllAsync() };
+            return View(viewModel);
         }
         public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
-        {
-            
+        {           
             ViewData["MinDate"] = minDate.Value.ToString("yyyy-MM-dd");
             ViewData["MaxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
 
             var result = await _salesRecordService.FindByDateAsync(minDate, maxDate);
             return View(result);
         }
-        public IActionResult GroupingSearch()
+        public async Task<IActionResult> SearchByFilter(DateTime? minDate, DateTime? maxDate, Seller seller, Department department)
         {
-            return View();
+            ViewData["MinDate"] = minDate.Value.ToString("yyyy-MM-dd");
+            ViewData["MaxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
+
+            var result = await _salesRecordService.FindByFilterAsync(minDate, maxDate, seller, department);
+            return View(result);
+        }
+        public async Task<IActionResult> GroupingSearch(DateTime? minDate, DateTime? maxDate)
+        {
+            ViewData["MinDate"] = minDate.Value.ToString("yyyy-MM-dd");
+            ViewData["MaxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
+
+            var result = await  _salesRecordService.FindByDateGroupingAsync(minDate, maxDate);
+            return View(result);
         }
     }
 }
