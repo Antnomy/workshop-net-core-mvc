@@ -42,11 +42,6 @@
 
 <div class="panel panel-primary">
 
-    <div class="panel-heading">
-
-        <h3 class="panel-title">Total sales = @Model.Sum(obj => obj.Amount).ToString("F2")</h3>
-
-    </div>
 
     <div class="panel-body">
 
@@ -98,6 +93,7 @@
 
             <tbody>
 
+
                 @foreach (var item in Model)
 
                 {
@@ -147,6 +143,15 @@
             </tbody>
 
         </table>
+
+        @{
+            if (!Model.Any())
+            {
+                <div class="alert">
+                    <h3>Nenhum resultado encontrado</h3>
+                </div>
+            }
+        }
 
     </div>
 
