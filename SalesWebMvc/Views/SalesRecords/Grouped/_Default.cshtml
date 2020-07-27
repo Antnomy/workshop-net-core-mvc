@@ -1,0 +1,119 @@
+﻿@model SalesWebMvc.Models.ViewModels.SalesFormViewModel
+
+        <div class="panel-body">
+
+            <table class="table table-striped table-hover">
+
+                <thead>
+
+                    <tr class="success">
+
+                        <th>
+
+                            Id
+
+                        </th>
+
+                        <th>
+
+                            Date
+
+                        </th>
+
+                        <th>
+
+                            Seller
+
+                        </th>
+
+
+
+                        <th>
+
+                            Department
+
+                        </th>
+
+                        <th>
+
+                            Amount
+
+                        </th>
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+
+                    @foreach (var item in Model.Sales)
+
+                    {
+
+                        <tr>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Id)
+
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Data)
+
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Seller.Name)
+
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Seller.Department.Nome)
+
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Amount)
+
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Status)
+
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+            <div class="panel-heading">
+
+                <h3 class="panel-title">Total sales = @Model.Sales.Sum(obj => obj.Amount).ToString("F2")</h3>
+
+            </div>
+
+        </div>
+
+  
+
+
+

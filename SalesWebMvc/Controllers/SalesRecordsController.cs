@@ -31,7 +31,7 @@ namespace SalesWebMvc.Controllers
             ViewData["DefaultDataMax"] = today.ToString("yyyy-MM-dd");
             ViewData["DefaultDataMin"] = dateMinSale.ToString("yyyy-MM-dd");
 
-            SelectorViewModel viewModel = new SelectorViewModel() { Departments = await _departmentService.FindAllAsync(), Sellers = await _sellerService.FindAllAsync() };
+            SalesFormViewModel viewModel = new SalesFormViewModel() { Departments = await _departmentService.FindAllAsync(), Sellers = await _sellerService.FindAllAsync() };
             return View(viewModel);
         }
         public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
@@ -42,19 +42,21 @@ namespace SalesWebMvc.Controllers
             var result = await _salesRecordService.FindByDateAsync(minDate, maxDate);
             return View(result);
         }
-        public async Task<IActionResult> SearchByFilter(DateTime? minDate, DateTime? maxDate, Seller seller, Department department)
+        public async Task<IActionResult> SearchByFilter(DateTime? minDate, DateTime? maxDate, Seller seller, Department department, int selectGroup)
         {
             ViewData["MinDate"] = minDate.Value.ToString("yyyy-MM-dd");
             ViewData["MaxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.Group = selectGroup;
 
             var result = await _salesRecordService.FindByFilterAsync(minDate, maxDate, seller, department);
-            SelectorViewModel viewModel = new SelectorViewModel()
+            SalesFormViewModel viewModel = new SalesFormViewModel()
             { Departments = await _departmentService.FindAllAsync(), Sellers = await _sellerService.FindAllAsync(),Sales = result };
          
             return View(viewModel);
         }
         public async Task<IActionResult> GroupingSearch(DateTime? minDate, DateTime? maxDate, int grouping)
         {
+           
             ViewData["MinDate"] = minDate.Value.ToString("yyyy-MM-dd");
             ViewData["MaxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
 

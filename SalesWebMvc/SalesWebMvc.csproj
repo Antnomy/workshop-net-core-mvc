@@ -9,6 +9,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
 		<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.1" />
+		<None Include="wwwroot\css\StyleSheet.css" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
 	</ItemGroup>
 

@@ -72,10 +72,10 @@ namespace SalesWebMvc.Services
             {
                 result = result.Where(s => s.Data <= maxDate);
             }
-            result = result.OrderByDescending(s => s.Seller.Department);
+            result = result.OrderByDescending(s => s.Data);
 
-            var grupedResult = result.GroupBy(s => s.Seller.Department); 
-            
+            var grupedResult = result.GroupBy(s => s.Seller.Department);
+
             return await grupedResult.ToListAsync();
         }
         public async Task<DateTime> MinDateSaleAsync()
